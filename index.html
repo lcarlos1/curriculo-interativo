@@ -63,31 +63,49 @@
 
   </header>
 
-  <!-- PLAYER DE ÁUDIO -->
-  <section class="max-w-6xl mx-auto px-6 -mt-12 relative z-20">
-    <div class="glass rounded-3xl p-6 md:p-8 shadow-2xl border border-cyan-500/20">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/30 to-indigo-600/30 flex items-center justify-center">
-          <i class="fa-solid fa-headphones text-cyan-300"></i>
-        </div>
-        <div>
-          <h2 class="text-xl font-semibold">Apresentação em Áudio</h2>
-          <p class="text-xs text-slate-400">Liderança que une métricas e pessoas</p>
+    <!-- PLAYER DE ÁUDIO MINI -->
+  <div class="max-w-6xl mx-auto px-6 -mt-10 relative z-20">
+    <div class="inline-flex items-center gap-3 glass rounded-2xl px-4 py-2.5 border border-white/10 shadow-lg backdrop-blur-xl">
+      <button id="miniPlayBtn" class="w-8 h-8 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 flex items-center justify-center transition group" aria-label="Play">
+        <i id="miniPlayIcon" class="fa-solid fa-play text-cyan-300 text-xs group-hover:scale-110 transition"></i>
+      </button>
+      <div class="flex flex-col leading-tight">
+        <span class="text-[11px] uppercase tracking-wider text-slate-400">Pitch</span>
+        <span class="text-sm font-medium text-slate-200">Liderança que une métricas e pessoas</span>
+      </div>
+      <div class="w-24 hidden sm:block">
+        <div class="h-1 bg-white/10 rounded-full overflow-hidden">
+          <div id="miniProgress" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-indigo-500 transition-all duration-150"></div>
         </div>
       </div>
-      
-      <audio id="audioPlayer" class="w-full" controls preload="metadata" style="height:54px">
+      <span id="miniTime" class="text-[11px] mono text-slate-400 w-10 text-right">0:00</span>
+      <audio id="miniAudio" preload="metadata" class="hidden">
         <source src="https://raw.githubusercontent.com/lcarlos1/curriculo-interativo/main/Lideran%C3%A7a_que_une_m%C3%A9tricas_e_pessoas%20(1)%20(online-audio-converter.com).mp3" type="audio/mpeg">
-        Seu navegador não suporta áudio HTML5.
       </audio>
-      
-      <div class="mt-3 flex flex-wrap items-center gap-4 text-xs text-slate-400">
-        <span><i class="fa-regular fa-circle-play mr-1"></i>Clique para ouvir meu pitch de 60s</span>
-        <span class="hidden md:inline">•</span>
-        <span><i class="fa-solid fa-cloud-arrow-down mr-1"></i>Hospedado no GitHub</span>
-      </div>
     </div>
-  </section>
+  </div>
+  <script>
+  (function(){
+    const audio = document.getElementById('miniAudio');
+    const btn = document.getElementById('miniPlayBtn');
+    const icon = document.getElementById('miniPlayIcon');
+    const progress = document.getElementById('miniProgress');
+    const timeEl = document.getElementById('miniTime');
+    if(!audio || !btn) return;
+    
+    function fmt(t){ const m=Math.floor(t/60)||0; const s=Math.floor(t%60)||0; return m+':'+String(s).padStart(2,'0'); }
+    
+    btn.onclick = () => {
+      if(audio.paused){ audio.play(); } else { audio.pause(); }
+    };
+    audio.addEventListener('play', ()=>{ icon.classList.remove('fa-play'); icon.classList.add('fa-pause'); });
+    audio.addEventListener('pause', ()=>{ icon.classList.remove('fa-pause'); icon.classList.add('fa-play'); });
+    audio.addEventListener('timeupdate', ()=>{
+      if(audio.duration){ progress.style.width = (audio.currentTime/audio.duration*100)+'%'; timeEl.textContent = fmt(audio.currentTime); }
+    });
+    audio.addEventListener('loadedmetadata', ()=>{ timeEl.textContent = '0:00'; });
+  })();
+  </script>
 
 
   <!-- ESPECIALIZAÇÕES EM DESTAQUE -->
