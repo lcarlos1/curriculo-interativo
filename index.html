@@ -67,6 +67,7 @@
               <span id="miniTitle" class="text-sm font-medium text-slate-200">Luiz Carlos une RH e visão estratégica</span>
             </div>
             <span id="miniTime" class="text-[11px] mono text-slate-400 w-10 text-right hidden sm:block">0:00</span>
+              <span id="miniCounter" class="text-[10px] text-slate-500 w-6 text-right hidden sm:block">1/4</span>
               <button id="miniNext" class="w-6 h-6 rounded-full hover:bg-white/10 flex items-center justify-center transition" title="Próxima faixa">
                 <i class="fa-solid fa-forward-step text-[10px] text-slate-400"></i>
               </button>
@@ -323,6 +324,7 @@ render(certs);
 </script>
 
 
+
 <script>
 (function(){
   const audio = document.getElementById('miniAudio');
@@ -331,6 +333,7 @@ render(certs);
   const timeEl = document.getElementById('miniTime');
   const titleEl = document.getElementById('miniTitle');
   const nextBtn = document.getElementById('miniNext');
+  const counterEl = document.getElementById('miniCounter');
   if(!audio || !btn) return;
   
   const playlist = [
@@ -360,6 +363,7 @@ render(certs);
     current = i;
     audio.src = playlist[current].src;
     if(titleEl) titleEl.textContent = playlist[current].title;
+    if(counterEl) counterEl.textContent = (current+1) + '/' + playlist.length;
     audio.load();
   }
   
@@ -381,10 +385,11 @@ render(certs);
   audio.addEventListener('ended', nextTrack);
   audio.addEventListener('loadedmetadata', ()=>{ if(timeEl) timeEl.textContent = '0:00'; });
   
-  // Inicializa primeira faixa
+  // Inicializa
   loadTrack(0);
 })();
 </script>
+
 
 </body>
 </html>
