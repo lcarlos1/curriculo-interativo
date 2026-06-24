@@ -64,12 +64,13 @@
             </button>
             <div class="flex flex-col leading-tight">
               <span class="text-[11px] uppercase tracking-wider text-slate-400">Pitch em áudio</span>
-              <span class="text-sm font-medium text-slate-200">Liderança que une métricas e pessoas</span>
+              <span id="miniTitle" class="text-sm font-medium text-slate-200">A nova liderança une pessoas e finanças</span>
             </div>
             <span id="miniTime" class="text-[11px] mono text-slate-400 w-10 text-right hidden sm:block">0:00</span>
-            <audio id="miniAudio" preload="metadata" class="hidden">
-              <source src="https://raw.githubusercontent.com/lcarlos1/curriculo-interativo/main/Lideran%C3%A7a_que_une_m%C3%A9tricas_e_pessoas%20(1)%20(online-audio-converter.com).mp3" type="audio/mpeg">
-            </audio>
+              <button id="miniNext" class="w-6 h-6 rounded-full hover:bg-white/10 flex items-center justify-center transition" title="Próxima faixa">
+                <i class="fa-solid fa-forward-step text-[10px] text-slate-400"></i>
+              </button>
+            <audio id="miniAudio" preload="metadata" class="hidden"></audio>
           </div>
 
         </div>
@@ -321,19 +322,61 @@ function filterCards(){
 render(certs);
 </script>
 
+
 <script>
 (function(){
   const audio = document.getElementById('miniAudio');
   const btn = document.getElementById('miniPlayBtn');
   const icon = document.getElementById('miniPlayIcon');
   const timeEl = document.getElementById('miniTime');
+  const titleEl = document.getElementById('miniTitle');
+  const nextBtn = document.getElementById('miniNext');
   if(!audio || !btn) return;
+  
+  const playlist = [
+    {
+      title: "A nova liderança une pessoas e finanças",
+      src: "https://raw.githubusercontent.com/lcarlos1/curriculo-interativo/main/A_nova_lideran%C3%A7a_une_pessoas_e_finan%C3%A7as_2.mp3"
+    },
+    {
+      title: "Liderança que une métricas e pessoas",
+      src: "https://raw.githubusercontent.com/lcarlos1/curriculo-interativo/main/Lideran%C3%A7a_que_une_m%C3%A9tricas_e_pessoas%20(1)%20(online-audio-converter.com).mp3"
+    }
+  ];
+  
+  let current = 0;
+  
   function fmt(t){ const m=Math.floor(t/60)||0; const s=Math.floor(t%60)||0; return m+':'+String(s).padStart(2,'0'); }
-  btn.onclick = () => { if(audio.paused){ audio.play(); } else { audio.pause(); } };
+  
+  function loadTrack(i){
+    current = i;
+    audio.src = playlist[current].src;
+    if(titleEl) titleEl.textContent = playlist[current].title;
+    audio.load();
+  }
+  
+  function playPause(){
+    if(audio.paused){ audio.play(); } else { audio.pause(); }
+  }
+  
+  function nextTrack(){
+    loadTrack((current + 1) % playlist.length);
+    audio.play();
+  }
+  
+  btn.onclick = playPause;
+  if(nextBtn) nextBtn.onclick = nextTrack;
+  
   audio.addEventListener('play', ()=>{ icon.classList.remove('fa-play'); icon.classList.add('fa-pause'); });
   audio.addEventListener('pause', ()=>{ icon.classList.remove('fa-pause'); icon.classList.add('fa-play'); });
   audio.addEventListener('timeupdate', ()=>{ if(audio.duration && timeEl){ timeEl.textContent = fmt(audio.currentTime); } });
+  audio.addEventListener('ended', nextTrack);
+  audio.addEventListener('loadedmetadata', ()=>{ if(timeEl) timeEl.textContent = '0:00'; });
+  
+  // Inicializa primeira faixa
+  loadTrack(0);
 })();
 </script>
+
 </body>
 </html>
