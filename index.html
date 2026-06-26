@@ -202,13 +202,16 @@
 
     <div class="mt-16 glass rounded-2xl p-8">
       <h3 class="text-xl font-semibold mb-3">Como validar</h3>
-      <p class="text-slate-300 text-sm leading-relaxed mb-4">Cada certificado Saylor possui um código ID terminando em "LC". Clique em "Copiar", depois em "Validar" para abrir o validador oficial da Saylor Academy e cole o código. O certificado MOBI Quick Start Entrepreneur abre validação direta no site da My Own Business Institute.</p>
+      <p class="text-slate-300 text-sm leading-relaxed mb-4">Cada certificado Saylor possui um código ID terminando em "LC". Clique em "Copiar", depois em "Validar" para abrir o validador oficial da Saylor Academy e cole o código. Os certificados MOBI e UNIFF abrem validação direta nos seus respectivos portais.</p>
       <div class="flex flex-wrap gap-3">
       <a href="https://learn.saylor.org/admin/tool/certificate/index.php" target="_blank" class="inline-flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg text-sm">
         <i class="fa-solid fa-up-right-from-square"></i> Validador Saylor
       </a>
       <a href="https://courses.myownbusiness.org/badges/badge.php?hash=4a262ce7bcf0c9a0502d62f2c2528f5ff48f9a0f" target="_blank" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-black px-4 py-2 rounded-lg text-sm">
         <i class="fa-solid fa-award"></i> Validar certificado MOBI
+      </a>
+      <a href="https://splituniff.bubbleapps.io/autenticacao?id=2025CT2510080841" target="_blank" class="inline-flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-black px-4 py-2 rounded-lg text-sm">
+        <i class="fa-solid fa-graduation-cap"></i> Validar MBA UNIFF
       </a>
       </div>
     </div>
@@ -222,6 +225,7 @@
 
 <script>
 const certs = [
+    {code:'UNIFF-MBA', name:'MBA in Human Resource Management', date:'06 dez 2022', hours:480, score:null, id:'2025CT2510080841', area:'lideranca', validator:'https://splituniff.bubbleapps.io/autenticacao?id=2025CT2510080841'},
     {code:'MOBI-QSE', name:'Quick Start Entrepreneur 2025-2026', date:'11 mai 2026', hours:10, score:null, id:'4a262ce7bcf0c9a', area:'estrategia', validator:'https://courses.myownbusiness.org/badges/badge.php?hash=4a262ce7bcf0c9a0502d62f2c2528f5ff48f9a0f'},
     {code:'BUS107', name:'Customer Service', date:'24 jun 2026', hours:26, score:93.75, id:'7182530110LC', area:'comunicacao'},
         {code:'BUS205', name:'Business Law', date:'15 jun 2026', hours:39, score:96, id:'7586842929LC', area:'estrategia'},
