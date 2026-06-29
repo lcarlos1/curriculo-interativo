@@ -92,9 +92,13 @@
           <div>
             <p class="text-xs uppercase tracking-widest text-amber-300/90">Destaque Profissional</p>
             <h2 class="text-2xl md:text-3xl font-bold mt-1">Especializações Internacionais + MBA UNIFF</h2>
-            <p class="text-slate-400 text-sm mt-1">1.124 horas validadas Saylor Academy • MBA em destaque</p>
+            <p class="text-slate-400 text-sm mt-1" id="saylorHoursText">1.124 horas validadas Saylor Academy • MBA em destaque</p>
+            <p class="text-slate-500 text-xs mt-1" id="totalGeralText">Total de horas internacionais: 1.134h</p>
           </div>
-          <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
+          <div class="flex items-center gap-2">
+            <span id="badgeTotalHoras" class="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 text-cyan-100 border border-cyan-400/40 shadow-lg shadow-cyan-500/20 backdrop-blur font-medium tracking-wide">1.134h internacionais</span>
+            <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
+          </div>
         </div>
 
         <!-- MBA UNIFF EM DESTAQUE -->
@@ -287,7 +291,20 @@ const certs = [    {code:'MOBI-QSE', name:'Quick Start Entrepreneur 2025-2026', 
   {code:'BUS200', name:'Business Ethics', date:'27 mai 2026', hours:14, score:92.31, id:'0268700581LC', area:'estrategia'},
   {code:'BUS501', name:'Strategic Management', date:'27 mai 2026', hours:22, score:97.67, id:'8651826056LC', area:'estrategia'},
   {code:'BUS610', name:'Advanced Business Intelligence and Analytics', date:'17 jun 2026', hours:83, score:72.5, id:'1483490041LC', area:'estrategia'},
+  {code:'ALISON-DBA', name:'Diploma in Business Administration – Alison', date:'29 jun 2026', hours:1.5, score:88, id:'edef059d78', area:'estrategia', validator:'https://alison.com/verify/edef059d78'},
 ];
+
+function updateTotals(){
+  const totalSaylor = certs.filter(c => c.id && c.id.endsWith('LC')).reduce((s,c) => s + (c.hours||0), 0);
+  const totalGeral = certs.reduce((s,c) => s + (c.hours||0), 0);
+  const elSaylor = document.getElementById('saylorHoursText');
+  const elGeral = document.getElementById('totalGeralText');
+  const elBadge = document.getElementById('badgeTotalHoras');
+  if(elSaylor) elSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')} horas validadas Saylor Academy • MBA em destaque`;
+  if(elGeral) elGeral.textContent = `Total de horas internacionais: ${totalGeral.toLocaleString('pt-BR')}h`;
+  if(elBadge) elBadge.textContent = `${totalGeral.toLocaleString('pt-BR')}h internacionais`;
+}
+document.addEventListener('DOMContentLoaded', updateTotals);
 
 function render(list){
   const grid = document.getElementById('grid');
