@@ -95,7 +95,10 @@
             <p class="text-slate-400 text-sm mt-1" id="saylorHoursText">1.124 horas validadas Saylor Academy • MBA em destaque</p>
             <p class="text-slate-500 text-xs mt-1" id="totalGeralText">Total de horas internacionais: 1.134h</p>
           </div>
-          <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
+          <div class="flex items-center gap-2">
+            <span id="badgeTotalHoras" class="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 text-cyan-100 border border-cyan-400/40 shadow-lg shadow-cyan-500/20 backdrop-blur font-medium tracking-wide">1.134h internacionais</span>
+            <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
+          </div>
         </div>
 
         <!-- MBA UNIFF EM DESTAQUE -->
@@ -295,11 +298,15 @@ function updateTotals(){
   const totalGeral = certs.reduce((s,c) => s + (c.hours||0), 0);
   const elSaylor = document.getElementById('saylorHoursText');
   const elGeral = document.getElementById('totalGeralText');
+  const elBadge = document.getElementById('badgeTotalHoras');
   if(elSaylor){
     elSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')} horas validadas Saylor Academy • MBA em destaque`;
   }
   if(elGeral){
     elGeral.textContent = `Total de horas internacionais: ${totalGeral.toLocaleString('pt-BR')}h`;
+  }
+  if(elBadge){
+    elBadge.textContent = `${totalGeral.toLocaleString('pt-BR')}h internacionais`;
   }
 }
 // garante que rode depois do DOM
