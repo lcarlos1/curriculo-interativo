@@ -92,7 +92,8 @@
           <div>
             <p class="text-xs uppercase tracking-widest text-amber-300/90">Destaque Profissional</p>
             <h2 class="text-2xl md:text-3xl font-bold mt-1">Especializações Internacionais + MBA UNIFF</h2>
-            <p class="text-slate-400 text-sm mt-1">1.124 horas validadas Saylor Academy • MBA em destaque</p>
+            <p class="text-slate-400 text-sm mt-1" id="saylorHoursText">1.124 horas validadas Saylor Academy • MBA em destaque</p>
+            <p class="text-slate-500 text-xs mt-1" id="totalGeralText">Total de horas internacionais: 1.134h</p>
           </div>
           <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
         </div>
@@ -288,6 +289,21 @@ const certs = [    {code:'MOBI-QSE', name:'Quick Start Entrepreneur 2025-2026', 
   {code:'BUS501', name:'Strategic Management', date:'27 mai 2026', hours:22, score:97.67, id:'8651826056LC', area:'estrategia'},
   {code:'BUS610', name:'Advanced Business Intelligence and Analytics', date:'17 jun 2026', hours:83, score:72.5, id:'1483490041LC', area:'estrategia'},
 ];
+
+function updateTotals(){
+  const totalSaylor = certs.filter(c => c.id && c.id.endsWith('LC')).reduce((s,c) => s + (c.hours||0), 0);
+  const totalGeral = certs.reduce((s,c) => s + (c.hours||0), 0);
+  const elSaylor = document.getElementById('saylorHoursText');
+  const elGeral = document.getElementById('totalGeralText');
+  if(elSaylor){
+    elSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')} horas validadas Saylor Academy • MBA em destaque`;
+  }
+  if(elGeral){
+    elGeral.textContent = `Total de horas internacionais: ${totalGeral.toLocaleString('pt-BR')}h`;
+  }
+}
+// garante que rode depois do DOM
+document.addEventListener('DOMContentLoaded', updateTotals);
 
 function render(list){
   const grid = document.getElementById('grid');
