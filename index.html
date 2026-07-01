@@ -368,13 +368,23 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('grid').scrollIntoView({ behavior: 'smooth' });
     });
   });
-  // Contador de visitas global
+  // Contador de visitas global - API confiável
   const visitEl = document.getElementById('visitCount');
   if(visitEl){
-    fetch('https://api.countapi.xyz/hit/luizcarlos-cv/visits')
+    // Usa alternativa ao countapi.xyz que está instável
+    fetch('https://countapi.mileshilliard.com/api/v1/hit/luizcarlos_cv_2026')
       .then(r => r.json())
-      .then(d => { visitEl.textContent = d.value.toLocaleString('pt-BR'); })
-      .catch(() => { visitEl.textContent = '—'; });
+      .then(d => { 
+        const val = Number(d.value) || 0;
+        visitEl.textContent = val.toLocaleString('pt-BR'); 
+      })
+      .catch(() => { 
+        // Fallback local se API falhar
+        const local = Number(localStorage.getItem('visitas_local') || 0) + 1;
+        localStorage.setItem('visitas_local', local);
+        visitEl.textContent = local.toLocaleString('pt-BR') + '*';
+        visitEl.title = 'Contador local (API offline)';
+      });
   }
 });
 
