@@ -16,6 +16,16 @@
   /* Filtro modernizado */
   #filter option { background:#0b1220; color:#e2e8f0; }
   #filter option:checked, #filter option:hover { background:#0891b2; color:#ffffff; }
+  /* Micro-interação Alison */
+  .card:hover .fa-certificate { animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{ transform: scale(1);} 50%{ transform: scale(1.15);} }
+  /* Modo impressão - Recrutador */
+  @media print {
+    body { background: white !important; color: black !important; }
+    header, .glass, #toast, .fixed, #miniPlayer, video, audio { display: none !important; }
+    .card { break-inside: avoid; border: 1px solid #ddd !important; background: white !important; box-shadow: none !important; transform: none !important; }
+    a { text-decoration: none; color: black; }
+  }
 </style>
 </head>
 <body class="min-h-screen">
@@ -88,17 +98,47 @@
   <section class="max-w-6xl mx-auto px-6 -mt-8 relative z-10">
     <div class="rounded-full p-[1px] bg-gradient-to-r from-amber-400/40 via-cyan-400/40 to-violet-400/40 shadow-2xl shadow-black/30">
       <div class="rounded-[26px] bg-slate-950/90 backdrop-blur-xl border border-white/10 p-8 md:p-10">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
             <p class="text-xs uppercase tracking-widest text-amber-300/90">Destaque Profissional</p>
             <h2 class="text-2xl md:text-3xl font-bold mt-1">Especializações Internacionais + MBA UNIFF</h2>
             <p class="text-slate-400 text-sm mt-1" id="saylorHoursText">1.124 horas validadas Saylor Academy • MBA em destaque</p>
-            <p class="text-slate-500 text-xs mt-1" id="totalGeralText">Total de horas internacionais: 1.134h</p>
           </div>
           <div class="flex items-center gap-2">
-            <span id="badgeTotalHoras" class="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 text-cyan-100 border border-cyan-400/40 shadow-lg shadow-cyan-500/20 backdrop-blur font-medium tracking-wide">1.134h internacionais</span>
+            <span id="badgeTotalHoras" class="text-xs px-3 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/30 via-indigo-500/30 to-purple-500/30 text-cyan-100 border border-cyan-400/40 shadow-lg shadow-cyan-500/20 backdrop-blur font-medium tracking-wide">1.135h internacionais</span>
             <span class="text-xs px-3 py-1.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Portfólio Sênior</span>
           </div>
+        </div>
+
+        <!-- Pílulas clicáveis - Nível 2 -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+          <button data-pill="saylor" class="group relative overflow-hidden rounded-xl border border-emerald-400/20 bg-emerald-500/5 hover:bg-emerald-500/10 p-3 text-left transition">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[11px] uppercase tracking-wider text-emerald-300/80">Saylor Academy</p>
+                <p class="text-lg font-semibold text-emerald-100" id="pillSaylor">1.124h</p>
+              </div>
+              <i class="fa-solid fa-graduation-cap text-emerald-400/60 group-hover:scale-110 transition"></i>
+            </div>
+          </button>
+          <button data-pill="alison" class="group relative overflow-hidden rounded-xl border border-sky-400/20 bg-sky-500/5 hover:bg-sky-500/10 p-3 text-left transition">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[11px] uppercase tracking-wider text-sky-300/80">Alison</p>
+                <p class="text-lg font-semibold text-sky-100" id="pillAlison">1,5h</p>
+              </div>
+              <i class="fa-solid fa-certificate text-sky-400/60 group-hover:scale-110 transition"></i>
+            </div>
+          </button>
+          <button data-pill="total" class="group relative overflow-hidden rounded-xl border border-violet-400/20 bg-violet-500/5 hover:bg-violet-500/10 p-3 text-left transition">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-[11px] uppercase tracking-wider text-violet-300/80">Total Internacional</p>
+                <p class="text-lg font-semibold text-violet-100" id="pillTotal">1.135h</p>
+              </div>
+              <i class="fa-solid fa-globe text-violet-400/60 group-hover:scale-110 transition"></i>
+            </div>
+          </button>
         </div>
 
         <!-- MBA UNIFF EM DESTAQUE -->
@@ -296,22 +336,40 @@ const certs = [    {code:'MOBI-QSE', name:'Quick Start Entrepreneur 2025-2026', 
 
 function updateTotals(){
   const totalSaylor = certs.filter(c => c.id && c.id.endsWith('LC')).reduce((s,c) => s + (c.hours||0), 0);
+  const totalAlison = certs.filter(c => c.code && c.code.startsWith('ALISON')).reduce((s,c) => s + (c.hours||0), 0);
   const totalGeral = certs.reduce((s,c) => s + (c.hours||0), 0);
+  
   const elSaylor = document.getElementById('saylorHoursText');
-  const elGeral = document.getElementById('totalGeralText');
   const elBadge = document.getElementById('badgeTotalHoras');
+  const pillSaylor = document.getElementById('pillSaylor');
+  const pillAlison = document.getElementById('pillAlison');
+  const pillTotal = document.getElementById('pillTotal');
+  
   if(elSaylor) elSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')} horas validadas Saylor Academy • MBA em destaque`;
-  if(elGeral) elGeral.textContent = `Total de horas internacionais: ${totalGeral.toLocaleString('pt-BR')}h`;
   if(elBadge) elBadge.textContent = `${totalGeral.toLocaleString('pt-BR')}h internacionais`;
+  if(pillSaylor) pillSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')}h`;
+  if(pillAlison) pillAlison.textContent = `${totalAlison.toLocaleString('pt-BR')}h`;
+  if(pillTotal) pillTotal.textContent = `${totalGeral.toLocaleString('pt-BR')}h`;
 }
-document.addEventListener('DOMContentLoaded', updateTotals);
+document.addEventListener('DOMContentLoaded', () => {
+  updateTotals();
+  // Pílulas clicáveis filtram a grade
+  document.querySelectorAll('[data-pill]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.pill;
+      if(type === 'saylor') render(certs.filter(c => c.id && c.id.endsWith('LC')));
+      else if(type === 'alison') render(certs.filter(c => c.code && c.code.startsWith('ALISON')));
+      else render(certs);
+      document.getElementById('grid').scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+});
 
 function render(list){
   const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-  list.forEach(c=>{
+  grid.innerHTML = list.map(c => {
     const isAlison = c.code && c.code.startsWith('ALISON');
-    grid.innerHTML += `
+    return `
     <div class="card glass rounded-2xl p-5 transition duration-300 ${isAlison ? 'ring-1 ring-sky-400/40 bg-sky-500/5 shadow-lg shadow-sky-500/10' : ''}" data-area="${c.area}" data-name="${c.name.toLowerCase()}">
       <div class="flex items-start justify-between">
         <span class="text-xs px-2 py-1 rounded-lg ${isAlison ? 'bg-sky-500/20 text-sky-200' : 'bg-white/10'} mono">${c.code}</span>
@@ -330,14 +388,14 @@ function render(list){
             <button type="button" onclick="copyText('${c.id}')" class="copy-btn text-xs px-2.5 py-1.5 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300">
               <i class="fa-regular fa-copy"></i>
             </button>
-            <a href="${c.validator || 'https://learn.saylor.org/admin/tool/certificate/index.php'}" target="_blank" class="text-xs px-2.5 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300" title="Validar">
-              <i class="fa-solid fa-shield-halved"></i>
+            <a href="${c.validator || 'https://learn.saylor.org/admin/tool/certificate/index.php'}" target="_blank" class="text-xs px-2.5 py-1.5 rounded-lg ${isAlison ? 'bg-sky-500/20 hover:bg-sky-500/30 text-sky-300' : 'bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300'}" title="Validar">
+              <i class="fa-solid ${isAlison ? 'fa-certificate' : 'fa-shield-halved'}"></i>
             </a>
           </div>
         </div>
       </div>
     </div>`;
-  });
+  }).join('');
 }
 
 async function copyText(txt){
