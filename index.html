@@ -72,6 +72,11 @@
               <i class="fa-solid fa-location-dot text-slate-400"></i>
               <span>Toledo, Paraná – Brasil</span>
             </div>
+            <div class="inline-flex items-center gap-2 glass px-4 py-3 rounded-xl" title="Visitas totais">
+              <i class="fa-solid fa-eye text-cyan-400"></i>
+              <span id="visitCount" class="mono text-sm">—</span>
+              <span class="text-xs text-slate-400 hidden sm:inline">visitas</span>
+            </div>
           </div>
           <!-- Mini Player -->
           <div class="mt-5 inline-flex items-center gap-3 glass rounded-2xl px-4 py-2.5 border border-white/10">
@@ -363,6 +368,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('grid').scrollIntoView({ behavior: 'smooth' });
     });
   });
+  // Contador de visitas global
+  const visitEl = document.getElementById('visitCount');
+  if(visitEl){
+    fetch('https://api.countapi.xyz/hit/luizcarlos-cv/visits')
+      .then(r => r.json())
+      .then(d => { visitEl.textContent = d.value.toLocaleString('pt-BR'); })
+      .catch(() => { visitEl.textContent = '—'; });
+  }
 });
 
 function render(list){
