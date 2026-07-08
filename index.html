@@ -156,16 +156,36 @@
   .visit-row span.mono{ color:var(--ink); font-weight:500; }
 
   /* mini audio player */
-  .player{ display:flex; align-items:center; gap:10px; }
+  .player{ display:flex; align-items:center; gap:8px; }
   .player-btn{
     flex-shrink:0; width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
     background:var(--accent-tint); display:flex; align-items:center; justify-content:center; color:var(--accent);
+    transition:transform .15s, border-color .2s, box-shadow .2s;
   }
-  .player-meta{ min-width:0; flex:1; }
-  .player-title{ font-size:.78rem; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .player-btn:hover{ transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint); }
+  .player-btn.playing{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-tint); }
+  .player-meta{ min-width:0; flex:1; display:flex; flex-direction:column; gap:4px; }
+  .player-title-row{ display:flex; align-items:center; gap:6px; }
+  .player-title{ font-size:.78rem; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; flex:1; }
+  .player-time-row{ display:flex; align-items:center; justify-content:space-between; }
   .player-time{ font-size:.68rem; color:var(--ink-3); }
-  .player-next{ flex-shrink:0; width:26px; height:26px; border-radius:50%; border:none; background:transparent; color:var(--ink-3); display:flex; align-items:center; justify-content:center; }
+  .player-progress{ height:3px; border-radius:99px; background:var(--bg-soft); overflow:hidden; cursor:pointer; }
+  .player-progress-fill{ height:100%; border-radius:99px; background:var(--accent); width:0%; transition:width .1s linear; }
+  .player-next{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%; border:none;
+    background:transparent; color:var(--ink-3); display:flex; align-items:center; justify-content:center;
+    transition:color .2s;
+  }
   .player-next:hover{ color:var(--accent); }
+  .player-eq{ display:inline-flex; align-items:center; gap:1.5px; height:10px; }
+  .player-eq span{ width:2px; background:var(--accent); border-radius:99px; animation:none; }
+  .player-eq.active span{ animation:eq-bar .5s ease-in-out infinite alternate; }
+  .player-eq span:nth-child(1){ height:4px; animation-delay:0s; }
+  .player-eq span:nth-child(2){ height:8px; animation-delay:.1s; }
+  .player-eq span:nth-child(3){ height:5px; animation-delay:.2s; }
+  .player-eq span:nth-child(4){ height:9px; animation-delay:.3s; }
+  .player-eq span:nth-child(5){ height:3px; animation-delay:.15s; }
+  @keyframes eq-bar{ 0%{ transform:scaleY(.4); } 100%{ transform:scaleY(1); } }
 
   .theme-toggle{
     display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:10px;
@@ -371,20 +391,30 @@
         </div>
 
         <div class="side-section">
-          <p class="side-heading">Pitch em Áudio</p>
-          <div class="player">
-            <button id="miniPlayBtn" class="player-btn" aria-label="Reproduzir apresentação">
-              <i id="miniPlayIcon" class="fa-regular fa-play"></i>
-            </button>
-            <div class="player-meta">
-              <div id="miniTitle" class="player-title">Apresentação — Luiz Carlos</div>
-              <div class="player-time"><span id="miniTime">0:00</span> · <span id="miniCounter">1/1</span></div>
+            <p class="side-heading">Áudio da Página</p>
+            <div class="player">
+              <button id="miniPlayBtn" class="player-btn" aria-label="Reproduzir apresentação">
+                <i id="miniPlayIcon" class="fa-regular fa-play"></i>
+              </button>
+              <div class="player-meta">
+                <div class="player-title-row">
+                  <div id="miniTitle" class="player-title">Apresentação — Luiz Carlos</div>
+                  <div class="player-eq" id="playerEq">
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+                <div class="player-time-row">
+                  <div class="player-time"><span id="miniTime">0:00</span> · <span id="miniCounter">1/1</span></div>
+                </div>
+                <div class="player-progress" id="playerProgress">
+                  <div class="player-progress-fill" id="playerProgressFill"></div>
+                </div>
+              </div>
+              <button id="miniNext" class="player-next" title="Próxima faixa" aria-label="Próxima faixa">
+                <i class="fa-solid fa-forward-step"></i>
+              </button>
+              <audio id="miniAudio" preload="metadata" class="hidden" style="display:none;"></audio>
             </div>
-            <button id="miniNext" class="player-next" title="Próxima faixa" aria-label="Próxima faixa">
-              <i class="fa-solid fa-forward-step"></i>
-            </button>
-            <audio id="miniAudio" preload="metadata" class="hidden" style="display:none;"></audio>
-          </div>
         </div>
 
 
@@ -924,6 +954,9 @@
     const titleEl = document.getElementById('miniTitle');
     const nextBtn = document.getElementById('miniNext');
     const counterEl = document.getElementById('miniCounter');
+    const progressEl = document.getElementById('playerProgress');
+    const progressFill = document.getElementById('playerProgressFill');
+    const eqEl = document.getElementById('playerEq');
     if(!audio || !btn) return;
 
     const playlist = [
@@ -957,11 +990,28 @@
     btn.onclick = playPause;
     if(nextBtn) nextBtn.onclick = nextTrack;
 
-    audio.addEventListener('play', ()=>{ icon.classList.remove('fa-play'); icon.classList.remove('fa-regular'); icon.classList.add('fa-solid'); icon.classList.add('fa-pause'); });
-    audio.addEventListener('pause', ()=>{ icon.classList.remove('fa-pause'); icon.classList.remove('fa-solid'); icon.classList.add('fa-regular'); icon.classList.add('fa-play'); });
-    audio.addEventListener('timeupdate', ()=>{ if(audio.duration && timeEl){ timeEl.textContent = fmt(audio.currentTime); } });
+    audio.addEventListener('play', ()=>{
+      icon.classList.remove('fa-play','fa-regular'); icon.classList.add('fa-solid','fa-pause');
+      if(btn) btn.classList.add('playing');
+      if(eqEl) eqEl.classList.add('active');
+    });
+    audio.addEventListener('pause', ()=>{
+      icon.classList.remove('fa-pause','fa-solid'); icon.classList.add('fa-regular','fa-play');
+      if(btn) btn.classList.remove('playing');
+      if(eqEl) eqEl.classList.remove('active');
+    });
+    audio.addEventListener('timeupdate', ()=>{
+      if(audio.duration && timeEl) timeEl.textContent = fmt(audio.currentTime);
+      if(audio.duration && progressFill) progressFill.style.width = (audio.currentTime/audio.duration*100)+'%';
+    });
     audio.addEventListener('ended', nextTrack);
-    audio.addEventListener('loadedmetadata', ()=>{ if(timeEl) timeEl.textContent = '0:00'; });
+    audio.addEventListener('loadedmetadata', ()=>{ if(timeEl) timeEl.textContent = '0:00'; if(progressFill) progressFill.style.width = '0%'; });
+
+    if(progressEl) progressEl.addEventListener('click', function(e){
+      const rect = this.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      if(audio.duration) audio.currentTime = pct * audio.duration;
+    });
 
     loadTrack(0);
   })();
