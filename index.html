@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luiz Carlos dos Santos — Currículo Interativo | Certificações Internacionais</title>
-<meta name="description" content="Currículo interativo de Luiz Carlos dos Santos — Analista em Administração e Planejamento. Formação, especializações e 37 certificações internacionais validadas.">
+<meta name="description" content="Currículo interativo de Luiz Carlos dos Santos — Analista em Administração e Planejamento. Formação, especializações e 43 certificações internacionais validadas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -402,7 +402,7 @@
           <strong>Bacharel em Administração</strong>, <strong>pós-graduado em Economia no Setor Público</strong> e
           <strong>especialista em Gestão Estratégica e Liderança</strong>, Luiz Carlos atua como Analista em Administração e
           Planejamento. Seu portfólio internacional reúne um <strong>MBA em Gestão de Pessoas (UNIFF)</strong>,
-          <strong>5 especializações</strong> e <strong>36 certificações</strong> validadas — entre elas cursos da Saylor
+          <strong>5 especializações</strong> e <strong>43 certificações</strong> validadas — entre elas cursos da Saylor
           Academy e da Alison — somando mais de 1.100 horas de formação complementar. Disponível para projetos internacionais.
         </p>
       </section>
@@ -439,8 +439,7 @@
             <p class="timeline-eyebrow">MBA Internacional · Destaque</p>
             <h3 class="timeline-title">MBA in Human Resource Management</h3>
             <div class="featured-card">
-              <p class="timeline-desc">480h · Concluído · Formação executiva com reconhecimento internacional (FLDOE –
-                Florida Department of Education).</p>
+              <p class="timeline-desc">480h · Março 2022 · MBA em Administração de Recursos Humanos – UNIFF LLC (St. Petersburg, FL) – FLDOE.</p>
               <div class="timeline-tags">
                 <span class="tag">UNIFF-MBA</span>
                 <span class="tag">480 horas</span>
@@ -450,6 +449,43 @@
               </a>
             </div>
           </div>
+
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
+            <h3 class="timeline-title">Gestão de Políticas Públicas</h3>
+            <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
+            <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
+            <h3 class="timeline-title">Custos e Orçamentos</h3>
+            <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
+            <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
+            <h3 class="timeline-title">Comunicação Empresarial</h3>
+            <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
+            <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
+            <h3 class="timeline-title">Psicologia da Aprendizagem</h3>
+            <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
+            <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-dot"></span>
+            <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
+            <h3 class="timeline-title">Higiene e Segurança do Trabalho</h3>
+            <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
+            <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
+          </div>
+
         </div>
       </section>
 
@@ -471,6 +507,10 @@
           <button data-pill="alison" class="pill">
             <p class="pill-label">Alison</p>
             <p class="pill-value" id="pillAlison">1,5h</p>
+          </button>
+          <button data-pill="uniff" class="pill" onclick="document.getElementById('filter').value='uniff'; filterCards(); document.querySelector('[data-panel=certificacoes]').scrollIntoView();">
+            <p class="pill-label">UNIFF</p>
+            <p class="pill-value" id="pillUniff">780h</p>
           </button>
           <button data-pill="total" class="pill">
             <p class="pill-label">Total Internacional</p>
@@ -562,6 +602,7 @@
             <option value="lideranca">Liderança</option>
             <option value="comunicacao">Comunicação</option>
             <option value="operacoes">Operações</option>
+            <option value="uniff">UNIFF</option>
           </select>
         </div>
 
@@ -667,11 +708,20 @@
   {code:'PRDV004', name:'Spreadsheets', date:'6 jul 2026', hours:5, score:95, id:'0489697461LC', area:'operacoes'},
   {code:'MOBI-QSE', name:'Quick Start Entrepreneur 2025-2026', date:'11 mai 2026', hours:10, score:null, id:'4a262ce7bcf0c9a', area:'estrategia', validator:'https://courses.myownbusiness.org/badges/badge.php?hash=4a262ce7bcf0c9a0502d62f2c2528f5ff48f9a0f'},
   {code:'ALISON-DBA', name:'Diploma in Business Administration – Alison', date:'29 jun 2026', hours:1.5, score:88, id:'edef059d78', area:'estrategia', validator:'https://alison.com/verify/edef059d78'},
+
+  {code:'UNIFF-MBA', name:'MBA em Administração de Recursos Humanos', date:'mar 2022', hours:480, score:null, id:'2025CT2510080841', area:'uniff', validator:'https://splituniff.bubbleapps.io/autenticacao?id=2025CT2510080841'},
+  {code:'UNIFF-GPP', name:'Gestão de Políticas Públicas', date:'25 jan 2022', hours:60, score:null, id:'UNIFF-GPP-2022', area:'uniff', validator:'https://lcarlos1.github.io/novo-curriculo/'},
+  {code:'UNIFF-COR', name:'Custos e Orçamentos', date:'25 jan 2022', hours:60, score:null, id:'UNIFF-COR-2022', area:'uniff', validator:'https://lcarlos1.github.io/novo-curriculo/'},
+  {code:'UNIFF-CE', name:'Comunicação Empresarial', date:'25 jan 2022', hours:60, score:null, id:'UNIFF-CE-2022', area:'uniff', validator:'https://lcarlos1.github.io/novo-curriculo/'},
+  {code:'UNIFF-PA', name:'Psicologia da Aprendizagem', date:'25 jan 2022', hours:60, score:null, id:'UNIFF-PA-2022', area:'uniff', validator:'https://lcarlos1.github.io/novo-curriculo/'},
+  {code:'UNIFF-HST', name:'Higiene e Segurança do Trabalho', date:'25 jan 2022', hours:60, score:null, id:'UNIFF-HST-2022', area:'uniff', validator:'https://lcarlos1.github.io/novo-curriculo/'},
+
 ];
 
   function updateTotals(){
     const totalSaylor = certs.filter(c => c.id && c.id.endsWith('LC')).reduce((s,c) => s + (c.hours||0), 0);
     const totalAlison = certs.filter(c => c.code && c.code.startsWith('ALISON')).reduce((s,c) => s + (c.hours||0), 0);
+    const totalUniff = certs.filter(c => c.area==='uniff').reduce((s,c) => s + (c.hours||0), 0);
     const totalGeral = certs.reduce((s,c) => s + (c.hours||0), 0);
 
     const elSaylor = document.getElementById('saylorHoursText');
@@ -679,12 +729,14 @@
     const pillSaylor = document.getElementById('pillSaylor');
     const pillAlison = document.getElementById('pillAlison');
     const pillTotal = document.getElementById('pillTotal');
+    const pillUniff = document.getElementById('pillUniff');
 
     if(elSaylor) elSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')} horas validadas Saylor Academy`;
     if(elBadge) elBadge.textContent = `${totalGeral.toLocaleString('pt-BR')}h internacionais`;
     if(pillSaylor) pillSaylor.textContent = `${totalSaylor.toLocaleString('pt-BR')}h`;
     if(pillAlison) pillAlison.textContent = `${totalAlison.toLocaleString('pt-BR')}h`;
     if(pillTotal) pillTotal.textContent = `${totalGeral.toLocaleString('pt-BR')}h`;
+    if(pillUniff) pillUniff.textContent = `${totalUniff.toLocaleString('pt-BR')}h`;
   }
 
   certs.forEach((c,i)=> c.seq = i+1);
