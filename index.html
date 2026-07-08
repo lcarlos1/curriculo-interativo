@@ -55,6 +55,37 @@
     *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
   }
 
+  /* ---------- Animations ---------- */
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(24px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes scaleIn{ from{ opacity:0; transform:scale(.92); } to{ opacity:1; transform:scale(1); } }
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+  .reveal-scale{ opacity:0; transform:scale(.92); transition:opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1); }
+  .reveal-scale.visible{ opacity:1; transform:scale(1); }
+  .delay-1{ transition-delay:.08s; } .delay-2{ transition-delay:.16s; } .delay-3{ transition-delay:.24s; } .delay-4{ transition-delay:.32s; } .delay-5{ transition-delay:.4s; } .delay-6{ transition-delay:.48s; }
+  .glow-border{ position:relative; }
+  .glow-border::after{ content:''; position:absolute; inset:-2px; border-radius:inherit; background:linear-gradient(135deg, var(--accent), var(--sky), var(--violet), var(--accent)); opacity:0; transition:opacity .4s; z-index:-1; filter:blur(4px); }
+  .glow-border:hover::after{ opacity:.3; }
+
+  /* Score progress bar */
+  .score-bar-wrap{ display:flex; align-items:center; gap:8px; margin-top:8px; }
+  .score-bar{ flex:1; height:5px; border-radius:99px; background:var(--bg-soft); overflow:hidden; }
+  .score-bar-fill{ height:100%; border-radius:99px; background:var(--accent); transition:width .8s cubic-bezier(.22,1,.36,1); }
+  .score-label{ font-size:.65rem; font-family:var(--font-mono); color:var(--ink-3); min-width:3.5ch; text-align:right; }
+
+  /* Spec card glow overlay */
+  .spec-card{ position:relative; isolation:isolate; }
+  .spec-card::before{ content:''; position:absolute; inset:-1px; border-radius:calc(var(--radius-md) + 2px); background:linear-gradient(135deg, var(--card-accent,var(--accent)), transparent 60%); opacity:0; transition:opacity .35s; z-index:-1; }
+  .spec-card:hover::before{ opacity:.15; }
+
+  /* Pill active state */
+  .pill.active{ border-color:var(--accent); background:var(--accent-tint); transform:translateY(-2px); }
+
+  /* Sidebar glass on desktop */
+  @media (min-width:1024px){
+    .sidebar-inner{ background:var(--bg-elevated); border:1px solid var(--line); border-radius:var(--radius-lg); padding:28px 24px; box-shadow:var(--shadow-sm); }
+  }
+
   /* ---------- Mobile top bar ---------- */
   .mobile-topbar{ display:none; }
   @media (max-width:767px){
@@ -310,7 +341,7 @@
 
     <!-- ================= SIDEBAR ================= -->
     <aside class="sidebar" data-panel="perfil">
-      <div class="sidebar-inner">
+      <div class="sidebar-inner reveal" style="transition-delay:.05s">
 
         <div class="profile-block">
           <div class="avatar-wrap">
@@ -386,7 +417,7 @@
     <!-- ================= MAIN ================= -->
     <main>
 
-      <section class="resumo">
+      <section class="resumo reveal" style="transition-delay:.1s">
         <p class="eyebrow">Resumo Executivo</p>
         <h1>Estratégia, liderança e dados a serviço da gestão pública e privada</h1>
         <p class="resumo-text">
@@ -407,7 +438,7 @@
 
       <!-- ---------- FORMAÇÃO ---------- -->
       <section data-panel="formacao" class="active">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div>
             <h2>Formação Acadêmica</h2>
             <p>Trajetória educacional, do bacharelado ao MBA internacional.</p>
@@ -415,17 +446,17 @@
         </div>
 
         <div class="timeline">
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-1">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Graduação</p>
             <h3 class="timeline-title">Bacharel em Administração</h3>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-2">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Pós-Graduação</p>
             <h3 class="timeline-title">Economia no Setor Público</h3>
           </div>
-          <div class="timeline-item featured">
+          <div class="timeline-item featured reveal delay-3">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">MBA Internacional · Destaque</p>
             <h3 class="timeline-title">MBA in Human Resource Management</h3>
@@ -441,35 +472,35 @@
             </div>
           </div>
 
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-4">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
             <h3 class="timeline-title">Gestão de Políticas Públicas</h3>
             <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
             <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-4">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
             <h3 class="timeline-title">Custos e Orçamentos</h3>
             <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
             <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-4">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
             <h3 class="timeline-title">Comunicação Empresarial</h3>
             <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
             <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-4">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
             <h3 class="timeline-title">Psicologia da Aprendizagem</h3>
             <p class="timeline-desc">University of Informatics and Faith in Florida (UNIFF LLC) – St. Petersburg, FL. Certificação: Ago 2022.</p>
             <div class="timeline-tags"><span class="tag">UNIFF</span><span class="tag">60 horas</span><span class="tag">25/01/2022</span></div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item reveal delay-4">
             <span class="timeline-dot"></span>
             <p class="timeline-eyebrow">Extensão UNIFF · 60h · Jan 2022</p>
             <h3 class="timeline-title">Higiene e Segurança do Trabalho</h3>
@@ -482,7 +513,7 @@
 
       <!-- ---------- ESPECIALIZAÇÕES ---------- -->
       <section data-panel="especializacoes">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div>
             <h2>Especializações Internacionais</h2>
             <p id="saylorHoursText">1.124 horas validadas Saylor Academy</p>
@@ -490,7 +521,7 @@
           <span id="badgeTotalHoras" class="tag" style="border-color:var(--accent); color:var(--accent);">1.135h internacionais</span>
         </div>
 
-        <div class="pill-row">
+        <div class="pill-row reveal delay-1">
           <button data-pill="saylor" class="pill">
             <p class="pill-label">Saylor Academy</p>
             <p class="pill-value" id="pillSaylor">1.124h</p>
@@ -510,7 +541,7 @@
         </div>
 
         <div class="spec-grid">
-          <div class="spec-card" style="--card-accent:var(--amber);">
+          <div class="spec-card reveal delay-1" style="--card-accent:var(--amber);">
             <i class="fa-solid fa-crown spec-icon"></i>
             <p class="spec-eyebrow">Especialização · 283h</p>
             <h3 class="spec-title">Business Strategy and Leadership Management</h3>
@@ -526,7 +557,7 @@
             </div>
           </div>
 
-          <div class="spec-card" style="--card-accent:var(--sky);">
+          <div class="spec-card reveal delay-2" style="--card-accent:var(--sky);">
             <i class="fa-regular fa-star spec-icon"></i>
             <p class="spec-eyebrow">Especialização · 208h</p>
             <h3 class="spec-title">Advanced Leadership and Strategy</h3>
@@ -542,7 +573,7 @@
             </div>
           </div>
 
-          <div class="spec-card" style="--card-accent:var(--violet);">
+          <div class="spec-card reveal delay-3" style="--card-accent:var(--violet);">
             <i class="fa-solid fa-award spec-icon"></i>
             <p class="spec-eyebrow">Especialização · 204h</p>
             <h3 class="spec-title">Specialization in Advanced Entrepreneurship</h3>
@@ -558,7 +589,7 @@
             </div>
           </div>
 
-          <div class="spec-card" style="--card-accent:var(--accent);">
+          <div class="spec-card reveal delay-4" style="--card-accent:var(--accent);">
             <i class="fa-solid fa-layer-group spec-icon"></i>
             <p class="spec-eyebrow">Especialização · 267h</p>
             <h3 class="spec-title">Business Essentials Specialization</h3>
@@ -578,14 +609,14 @@
 
       <!-- ---------- CERTIFICAÇÕES ---------- -->
       <section data-panel="certificacoes">
-        <div class="section-head">
+        <div class="section-head reveal">
           <div>
             <h2>Certificações Internacionais</h2>
             <p>Validadas com ID único. Copie e valide no site oficial.</p>
           </div>
         </div>
 
-        <div class="cert-controls">
+        <div class="cert-controls reveal delay-1">
           <input id="search" placeholder="Buscar curso..." onkeyup="filterCards()">
           <select id="filter" onchange="filterCards()">
             <option value="all">Todas áreas</option>
@@ -599,7 +630,7 @@
 
         <div id="grid" class="cert-grid"></div>
 
-        <div class="validar-box">
+        <div class="validar-box reveal">
           <h3>Como validar</h3>
           <p>Cada certificado Saylor possui um código ID terminando em "LC". Clique em "Copiar", depois em "Validar" para
             abrir o validador oficial da Saylor Academy e cole o código. Os certificados MOBI e UNIFF abrem validação
@@ -636,6 +667,26 @@
         if(label){ label.textContent = t === 'dark' ? 'Modo claro' : 'Modo escuro'; }
       });
     }
+    function observeReveal(){
+      const observer = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            // animate score bars inside
+            e.target.querySelectorAll('.score-bar-fill').forEach(bar=>{
+              const parent = bar.closest('.cert-card');
+              if(parent && parent.classList.contains('visible')) {
+                const score = parseFloat(parent.querySelector('.score-label')?.textContent) || 0;
+                bar.style.width = score + '%';
+              }
+            });
+            observer.unobserve(e.target);
+          }
+        });
+      },{ threshold:.12, rootMargin:'0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal, .reveal-scale').forEach(el => observer.observe(el));
+    }
+
     document.addEventListener('DOMContentLoaded', ()=>{
       paint(theme);
       document.querySelectorAll('[data-theme-toggle]').forEach(btn=>{
@@ -647,7 +698,7 @@
         });
       });
 
-      // Tabs (mobile)
+      // Tabs (mobile) with smooth reveal
       const tabBtns = document.querySelectorAll('.tab-btn');
       const panels = document.querySelectorAll('[data-panel]');
       tabBtns.forEach(btn=>{
@@ -656,6 +707,8 @@
           panels.forEach(p=> p.classList.toggle('active', p.dataset.panel===btn.dataset.tab));
         });
       });
+
+      observeReveal();
     });
   })();
   </script>
@@ -736,8 +789,9 @@
     const grid = document.getElementById('grid');
     grid.innerHTML = list.map(c => {
       const isAlison = c.code && c.code.startsWith('ALISON');
+      const idx = list.indexOf(c);
       return `
-      <div class="cert-card ${isAlison ? 'is-alison' : ''}" data-area="${c.area}" data-name="${c.name.toLowerCase()}">
+      <div class="cert-card reveal ${isAlison ? 'is-alison' : ''}" data-area="${c.area}" data-name="${c.name.toLowerCase()}" style="transition-delay:${(idx % 12) * 0.06}s">
         <div class="cert-top">
           <span class="cert-seq mono">#${String(c.seq).padStart(2,'0')}</span>
           <div style="display:flex; gap:6px; align-items:center;">
@@ -750,6 +804,7 @@
           <span><i class="fa-regular fa-clock" style="margin-right:5px;"></i>${c.hours}h</span>
           <span><i class="fa-solid fa-chart-line" style="margin-right:5px;"></i>${c.score ? c.score + '%' : 'Concluído'}</span>
         </div>
+        ${c.score ? `<div class="score-bar-wrap"><div class="score-bar"><div class="score-bar-fill" style="width:0%"></div></div><span class="score-label">${c.score}%</span></div>` : ''}
         <div class="cert-id-row">
           <p class="spec-id-label">ID de validação</p>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
@@ -797,6 +852,32 @@
     const f = document.getElementById('filter').value;
     const filtered = certs.filter(c => (f==='all' || c.area===f) && c.name.toLowerCase().includes(q));
     render(filtered);
+
+    document.querySelectorAll('[data-pill]').forEach(p => p.classList.toggle('active', p.dataset.pill === f));
+
+    // Re-observe new cards
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          e.target.querySelectorAll('.score-bar-fill').forEach(bar=>{
+            const parent = bar.closest('.cert-card');
+            if(parent && parent.classList.contains('visible')) {
+              const score = parseFloat(parent.querySelector('.score-label')?.textContent) || 0;
+              bar.style.width = score + '%';
+            }
+          });
+          observer.unobserve(e.target);
+        }
+      });
+    },{ threshold:.12, rootMargin:'0px 0px -40px 0px' });
+    document.querySelectorAll('#grid .reveal:not(.visible)').forEach(el => observer.observe(el));
+    // Also trigger visible ones immediately
+    document.querySelectorAll('#grid .reveal.visible .score-bar-fill').forEach(bar=>{
+      const parent = bar.closest('.cert-card');
+      const score = parseFloat(parent?.querySelector('.score-label')?.textContent) || 0;
+      bar.style.width = score + '%';
+    });
   }
 
   render(certs);
